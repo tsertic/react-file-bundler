@@ -1,7 +1,8 @@
 import { useFileUpload } from "./hooks/useFileUpload";
+import { generateTxtContent, downloadTxt } from "./utils/txtGenerator";
 import { theme } from "./styles/theme";
 import Header from "./components/Header";
-import UploadButtons from "./components/UploadButton";
+import UploadButtons from "./components/UploadButtons";
 import FileList from "./components/FileList";
 import GenerateButton from "./components/GenerateButton";
 
@@ -27,6 +28,11 @@ export default function App() {
     clearAll,
   } = useFileUpload();
 
+  const handleGenerate = () => {
+    const content = generateTxtContent(files);
+    downloadTxt(content);
+  };
+
   return (
     <div style={styles.container}>
       <Header />
@@ -36,7 +42,7 @@ export default function App() {
         onFiles={processFiles}
       />
       <FileList files={files} onRemove={removeFile} onClearAll={clearAll} />
-      <GenerateButton disabled={files.length === 0} onClick={() => {}} />
+      <GenerateButton disabled={files.length === 0} onClick={handleGenerate} />
     </div>
   );
 }
