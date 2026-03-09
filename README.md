@@ -1,16 +1,66 @@
-# React + Vite
+# 📦 File Bundler
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A lightweight React app that merges multiple source files into a single TXT document.
 
-Currently, two official plugins are available:
+Upload individual files or entire folders — the app reads their contents and bundles everything into one downloadable summary with file names, paths, and content.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Live demo:** [react-file-bundler](https://react-file-bundler-git-master-tsertics-projects.vercel.app/)
 
-## React Compiler
+## How It Works
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. Click **Upload Files** or **Upload Folder**
+2. The app reads and lists all supported files
+3. Click **Generate TXT** to download the bundled summary
 
-## Expanding the ESLint configuration
+Output format:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```
+Name: App.java
+Path: src/main/App.java
+Content:
+public class App { ... }
+---------------------
+
+Name: index.html
+Path: frontend/index.html
+Content:
+<!DOCTYPE html>...
+---------------------
+```
+
+## Supported File Types
+
+`.java` `.cs` `.js` `.jsx` `.ts` `.tsx` `.html` `.css` `.axvw` `.json` `.xml` `.py` `.rb` `.go` `.rs` `.cpp` `.c` `.h` `.sql` `.sh` `.yaml` `.yml` `.md` `.txt` `.vue` `.svelte` `.php` `.swift` `.kt` `.scala` `.groovy` `.gradle`
+
+## Setup
+
+```bash
+npm create vite@latest file-bundler -- --template react
+cd file-bundler
+npm install
+npm run dev
+```
+
+## Project Structure
+
+```
+src/
+├── App.jsx
+├── components/
+│   ├── Header.jsx
+│   ├── UploadButtons.jsx
+│   ├── FileList.jsx
+│   └── GenerateButton.jsx
+├── hooks/
+│   └── useFileUpload.js
+├── styles/
+│   └── theme.js
+└── utils/
+    ├── constants.js
+    ├── fileHelpers.js
+    └── txtGenerator.js
+```
+
+## Tech Stack
+
+React + Vite. No backend — everything runs in the browser using the FileReader API.
