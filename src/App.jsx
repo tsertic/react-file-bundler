@@ -1,35 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useFileUpload } from "./hooks/useFileUpload";
+import { theme } from "./styles/theme";
+import Header from "./components/Header";
+import UploadButtons from "./components/UploadButton";
+import FileList from "./components/FileList";
+import GenerateButton from "./components/GenerateButton";
 
-function App() {
-  const [count, setCount] = useState(0)
+const styles = {
+  container: {
+    maxWidth: 720,
+    margin: "0 auto",
+    padding: "40px 20px",
+    fontFamily: theme.fonts.base,
+    color: theme.colors.text,
+    minHeight: "100vh",
+    background: theme.colors.bgGradient,
+  },
+};
+
+export default function App() {
+  const {
+    files,
+    fileInputRef,
+    folderInputRef,
+    processFiles,
+    removeFile,
+    clearAll,
+  } = useFileUpload();
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div style={styles.container}>
+      <Header />
+      <UploadButtons
+        fileInputRef={fileInputRef}
+        folderInputRef={folderInputRef}
+        onFiles={processFiles}
+      />
+      <FileList files={files} onRemove={removeFile} onClearAll={clearAll} />
+      <GenerateButton disabled={files.length === 0} onClick={() => {}} />
+    </div>
+  );
 }
-
-export default App
